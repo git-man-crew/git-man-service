@@ -1,5 +1,5 @@
 import { GitPlatform } from '../git-platform.model';
-import { HttpService, Injectable } from '@nestjs/common';
+import { HttpService, Injectable, Logger } from '@nestjs/common';
 import { AxiosResponse, AxiosRequestConfig } from 'axios';
 import { Meta } from './Meta';
 
@@ -16,7 +16,7 @@ export class GithubService implements GitPlatform {
 
   async auth() {
     return await this.httpService
-      .get(Meta.authUrl, this.config)
+      .get('https://api.github.com', this.config)
       .toPromise()
       .then((response: AxiosResponse) => {
         return response.data;
@@ -28,7 +28,10 @@ export class GithubService implements GitPlatform {
 
   async getRepositories(): Promise<any> {
     return await this.httpService
-      .get(`${Meta.authUrl}/users/${process.env.user}/repos`, this.config)
+      .get(
+        `https://api.github.com/users/${process.env.user}/repos`,
+        this.config,
+      )
       .toPromise()
       .then((response: AxiosResponse) => {
         return response.data;
