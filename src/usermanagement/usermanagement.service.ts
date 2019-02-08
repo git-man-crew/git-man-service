@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import * as fbAdmin from 'firebase-admin';
 
 @Injectable()
@@ -18,16 +18,17 @@ export class UsermanagementService {
     });
   }
 
-  private checkUid(uid: string) {
-    fbAdmin
+  public async validUid(uid: string): Promise<Boolean> {
+    return fbAdmin
       .auth()
       .getUser(uid)
       .then(userRecord => {
-        // See the UserRecord reference doc for the contents of userRecord.
-        console.log('Successfully fetched user data:', userRecord.toJSON());
+        Logger.log(userRecord.toJSON());
+        return true;
       })
       .catch(error => {
-        console.log('Error fetching user data:', error);
+        Logger.error(error);
+        return false;
       });
   }
 
