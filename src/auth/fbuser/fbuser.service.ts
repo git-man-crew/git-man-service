@@ -10,7 +10,7 @@ export class FbuserService {
   }
 
   private initApp() {
-    let serviceAccount = require('../secrets/gitman-web-firebase-adminsdk.json');
+    let serviceAccount = require('./secrets/gitman-web-firebase-adminsdk.json');
 
     FirebaseAdmin.initializeApp({
       credential: FirebaseAdmin.credential.cert(serviceAccount),
