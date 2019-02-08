@@ -1,7 +1,6 @@
 import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { GitService } from './git.service';
 import { GitPlatform } from './platform/git-platform.model';
-import { GithubService } from './platform/github/github.service';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('git')

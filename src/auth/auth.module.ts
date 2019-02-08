@@ -4,7 +4,7 @@ import { PassportModule } from '@nestjs/passport';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
-import { UsermanagementModule } from 'src/usermanagement/usermanagement.module';
+import { FbuserService } from './fbuser/fbuser.service';
 
 @Module({
   imports: [
@@ -15,9 +15,8 @@ import { UsermanagementModule } from 'src/usermanagement/usermanagement.module';
         expiresIn: 3600,
       },
     }),
-    UsermanagementModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, FbuserService],
 })
 export class AuthModule {}

@@ -18,6 +18,7 @@ export class AuthService {
   async validateUser(payload: JwtPayload): Promise<any> {
     // put some validation logic here
     // for example query user by id/email/username
-    return { email: 'test@email.com' };
+    return {};
+    // return { email: 'test@email.com' };
   }
 }
