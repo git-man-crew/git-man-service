@@ -63,3 +63,4 @@ typings/
 
 # secrets
 src/auth/secrets/gitman-web-firebase-adminsdk.json
+src/auth/fbuser/secrets/**
