@@ -62,4 +62,4 @@ typings/
 
 
 # secrets
-src/usermanagement/secrets/gitman-web-firebase-adminsdk.json
+src/auth/secrets/gitman-web-firebase-adminsdk.json
