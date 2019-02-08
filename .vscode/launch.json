@@ -13,7 +13,8 @@
             "env": {
               "NODE_ENV": "test",
               "basicAuthToken": "aW1wbmd1eWVuOnBscGwyMTIw",
-              "user": "impnguyen"
+              "user": "impnguyen",
+              "fbDbUrl": "https://gitman-web.firebaseio.com'"
             }
           }
     ]
