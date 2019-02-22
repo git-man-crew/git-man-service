@@ -4,6 +4,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { AuthService } from './auth.service';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { FbuserService } from './fbuser/fbuser.service';
+import { JwtFirebasePayload } from './interfaces/jwt-firebase.interface';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -20,7 +21,16 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   /**
    * validate jwtpayload token
    */
-  async validate(payload: JwtPayload) {
+  // async validate(payload: JwtPayload) {
+  //   const user = await this.authService.validateUser(payload);
+  //   // const user = await this.fbuserService.validateUid(payload.uid);
+
+  //   if (!user) {
+  //     throw new UnauthorizedException();
+  //   }
+  //   return user;
+  // }
+  async validate(payload: JwtFirebasePayload) {
     const user = await this.authService.validateUser(payload);
     // const user = await this.fbuserService.validateUid(payload.uid);
 
