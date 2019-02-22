@@ -7,41 +7,41 @@ import {
   Logger,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { AuthService } from './auth.service';
 import { FbuserService } from './fbuser/fbuser.service';
 import * as FirebaseAdmin from 'firebase-admin';
+import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
   constructor(
-    private readonly authService: AuthService,
     private readonly fbuserService: FbuserService,
+    private readonly authService: AuthService,
   ) {}
 
   /**
-   * return jwt token if firebase authentication is valid
-   * @param req
+   * returns a custom firebase jwt token
+   * if firebase uid based authentication is valid
+   * @param req object - request object
    */
+  // @Get('token')
+  // async createToken(@Request() req): Promise<any> {
+  //   let uid = req.headers.fbauthorization;
+
+  //   if (await this.fbuserService.validateUid(uid)) {
+  //     try {
+  //       return FirebaseAdmin.auth().createCustomToken(uid);
+  //     } catch (error) {
+  //       throw UnauthorizedException;
+  //     }
+  //   } else {
+  //     throw UnauthorizedException;
+  //   }
+  // }
   @Get('token')
-  async createToken(@Request() req): Promise<any> {
-    let uid = req.headers.fbauthorization;
-
-    if (await this.fbuserService.validateUid(uid)) {
-      //return await this.authService.createToken();
-
-      try {
-        return FirebaseAdmin.auth().createCustomToken(uid);
-      } catch (error) {
-        Logger.error('Error creating custom token:', error);
-      }
-    } else {
-      throw UnauthorizedException;
-    }
+  async createToken(): Promise<any> {
+    return await this.authService.createToken();
   }
 
-  /**
-   * sample access with token constraints
-   */
   @Get('data')
   @UseGuards(AuthGuard())
   findAll() {

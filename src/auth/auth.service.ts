@@ -1,20 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
+import { FbuserService } from './fbuser/fbuser.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly fbuserService: FbuserService,
+  ) {}
 
-  /**
-   *
-   */
   async createToken() {
-    const user: JwtPayload = { email: 'test@email.com' };
+    const user: JwtPayload = {
+      mail: 'test@me.com',
+    };
     const accessToken = this.jwtService.sign(user);
-
     return {
-      expiresIn: 9000,
+      expiresIn: 90000,
       accessToken,
     };
   }
@@ -22,7 +24,10 @@ export class AuthService {
   async validateUser(payload: JwtPayload): Promise<any> {
     // put some validation logic here
     // for example query user by id/email/username
-    return {};
     // return { email: 'test@email.com' };
+
+    // const user = await this.fbuserService.validateUid(payload.uid);
+
+    return {};
   }
 }

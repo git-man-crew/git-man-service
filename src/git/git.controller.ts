@@ -9,6 +9,19 @@ export class GitController {
 
   constructor(private readonly gitService: GitService) {}
 
+  /**
+   * get supported platforms
+   */
+  @Get('supportedPlatform')
+  @UseGuards(AuthGuard())
+  public supportedPlatform(): any {
+    return { supportedPlatforms: ['Github', 'Gitlab', 'Azure Devops (VSTS)'] };
+  }
+
+  /**
+   * get all repositories
+   * @param platform string - Platform name
+   */
   @Get('/allRepos/:platform')
   @UseGuards(AuthGuard())
   public allRepos(@Param('platform') platform: platform): any {
@@ -18,12 +31,6 @@ export class GitController {
     } catch (error) {
       return 'platform not supported';
     }
-  }
-
-  @Get('supportedPlatform')
-  @UseGuards(AuthGuard())
-  public supportedPlatform(): any {
-    return { supportedPlatforms: ['Github', 'Gitlab', 'Azure Devops (VSTS)'] };
   }
 }
 
