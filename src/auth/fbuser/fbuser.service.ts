@@ -18,7 +18,11 @@ export class FbuserService {
     });
   }
 
-  async validUid(uid: string): Promise<Boolean> {
+  /**
+   * check if uid exists
+   * @param uid string - firebase user id
+   */
+  async validateUid(uid: string): Promise<Boolean> {
     return FirebaseAdmin.auth()
       .getUser(uid)
       .then(userRecord => {
