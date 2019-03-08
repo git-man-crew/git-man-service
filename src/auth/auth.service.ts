@@ -12,16 +12,16 @@ export class AuthService {
     private readonly fbuserService: FbuserService,
   ) {}
 
-  // async createToken() {
-  //   const user: JwtPayload = {
-  //     mail: 'test@me.com',
-  //   };
-  //   const accessToken = this.jwtService.sign(user);
-  //   return {
-  //     expiresIn: 90000,
-  //     accessToken,
-  //   };
-  // }
+  async createToken() {
+    const user: JwtPayload = {
+      mail: 'test@me.com',
+    };
+    const accessToken = this.jwtService.sign(user);
+    return {
+      expiresIn: 90000,
+      accessToken,
+    };
+  }
 
   /**
    * validate firebase uid and create access token
