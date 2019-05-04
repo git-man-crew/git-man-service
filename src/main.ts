@@ -12,6 +12,7 @@ async function bootstrap() {
     .setVersion(configService.getModuleProperty('version'))
     .addTag('git man service api rest')
     .addBearerAuth('Authorization')
+    .setSchemes('http', 'https')
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
