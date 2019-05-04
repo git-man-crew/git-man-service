@@ -15,18 +15,18 @@ import {
 import AWS = require('aws-sdk');
 import jwkToPem = require('jwk-to-pem');
 import jwt = require('jsonwebtoken');
-import { UserModel } from '../model/user.model';
+import { UserModel } from '../models/user.model';
 import { ConfigService } from '../../config/service/config.service';
 (global as any).fetch = require('node-fetch');
 
 @Injectable()
 export class UserRepository {
   private readonly poolData: ICognitoUserPoolData = {
-    UserPoolId: this.configService.get('USER_POOL_ID'),
-    ClientId: this.configService.get('APP_CLIENT_ID'),
+    UserPoolId: this.configService.getSystemProperty('USER_POOL_ID'),
+    ClientId: this.configService.getSystemProperty('APP_CLIENT_ID'),
   };
   private readonly userPool = new CognitoUserPool(this.poolData);
-  private readonly pool_region = this.configService.get('AWS_REGION');
+  private readonly pool_region = this.configService.getSystemProperty('AWS_REGION');
 
   constructor(private readonly configService: ConfigService, private httpService: HttpService) {
     AWS.config = new AWS.Config();

@@ -5,7 +5,7 @@ import {
     UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserModel } from '../model/user.model';
+import { UserModel } from '../models/user.model';
 import { UserRepository } from '../repository/user.repository';
 
 @Injectable()
@@ -23,7 +23,7 @@ export class UserService {
             !userModel.password ||
             !userModel.phoneNumber
         ) {
-            throw new BadRequestException();
+            throw new BadRequestException('Missing user data for registration');
         }
         return this.userRepository.signUpUser(userModel);
     }
