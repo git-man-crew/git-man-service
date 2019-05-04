@@ -1,12 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { JwtStrategy } from './jwt.strategy';
+import { UserModule } from '../user.module';
 
 describe('JwtStrategy', () => {
   let provider: JwtStrategy;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [JwtStrategy],
+      imports: [UserModule],
     }).compile();
 
     provider = module.get<JwtStrategy>(JwtStrategy);
