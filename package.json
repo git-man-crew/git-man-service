@@ -5,6 +5,7 @@
   "author": "",
   "license": "MIT",
   "scripts": {
+    "postinstall": "npm run lint && npm run test",
     "build": "tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\"",
     "serve": "ts-node -r tsconfig-paths/register src/main.ts",

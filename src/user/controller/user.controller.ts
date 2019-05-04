@@ -99,7 +99,7 @@ export class UserController {
   })
   @ApiResponse({ status: 400, description: 'Forbidden' })
   public async changePassword(
-    @Body() userModel: UserModel
+    @Body() userModel: UserModel,
   ): Promise<any> {
     return await this.userService.changePassword(userModel);
   }

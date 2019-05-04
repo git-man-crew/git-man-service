@@ -14,7 +14,8 @@ import jwkToPem = require('jwk-to-pem');
 import jwt = require('jsonwebtoken');
 import { UserModel } from '../models/user.model';
 import { ConfigService } from '../../config/service/config.service';
-(global as any).fetch = require('node-fetch');
+import fetch = require('node-fetch');
+(global as any).fetch = fetch;
 
 @Injectable()
 export class UserRepository {
@@ -23,7 +24,7 @@ export class UserRepository {
     ClientId: this.configService.getSystemProperty('APP_CLIENT_ID'),
   };
   private readonly userPool = new CognitoUserPool(this.poolData);
-  private readonly pool_region = this.configService.getSystemProperty(
+  private readonly poolRegion = this.configService.getSystemProperty(
     'AWS_REGION',
   );
 
@@ -32,7 +33,7 @@ export class UserRepository {
     private httpService: HttpService,
   ) {
     AWS.config = new AWS.Config();
-    AWS.config.region = this.pool_region;
+    AWS.config.region = this.poolRegion;
   }
 
   public signUpUser(userModel: UserModel): Promise<any> {
@@ -86,7 +87,7 @@ export class UserRepository {
   public validateToken(token): Promise<any> {
     return this.httpService
       .get(
-        `https://cognito-idp.${this.pool_region}.amazonaws.com/${
+        `https://cognito-idp.${this.poolRegion}.amazonaws.com/${
         this.poolData.UserPoolId
         }/.well-known/jwks.json`,
       )
@@ -197,7 +198,7 @@ export class UserRepository {
 
     const userData = {
       Username: authenticationDetails.getUsername(),
-      Pool: this.userPool
+      Pool: this.userPool,
     };
     const cognitoUser = new CognitoUser(userData);
 
