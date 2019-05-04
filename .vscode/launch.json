@@ -9,10 +9,7 @@
       "name": "Launch Program",
       "runtimeArgs": ["-r", "ts-node/register"],
       "args": ["${workspaceFolder}/src/main.ts"],
-      "console": "integratedTerminal",
-      "env": {
-        "NODE_ENV": "dev"
-      }
+      "console": "integratedTerminal"
     }, {
       "type": "node",
       "request": "launch",
@@ -23,9 +20,6 @@
       "internalConsoleOptions": "neverOpen",
       "windows": {
         "program": "${workspaceFolder}/node_modules/jest/bin/jest",
-      },
-      "env": {
-        "NODE_ENV": "qa"
       }
     },
     {
@@ -38,9 +32,6 @@
       "internalConsoleOptions": "neverOpen",
       "windows": {
         "program": "${workspaceFolder}/node_modules/jest/bin/jest",
-      },
-      "env": {
-        "NODE_ENV": "qa"
       }
     },
   ]
