@@ -1,4 +1,4 @@
-import { ApiModelProperty } from "@nestjs/swagger";
+import { ApiModelProperty } from '@nestjs/swagger';
 
 export class PayloadModel {
   @ApiModelProperty({
@@ -12,7 +12,8 @@ export class PayloadModel {
     description: 'Access token of the user',
     readOnly: true,
     required: true,
-    example: 'eyJraWQiOiJUYlwvOVhrRTMzMU1UMGF2QVQzc1NkamExc2ZRZXJvaUJEVlwvbjd...',
+    example:
+      'eyJraWQiOiJUYlwvOVhrRTMzMU1UMGF2QVQzc1NkamExc2ZRZXJvaUJEVlwvbjd...',
   })
   readonly accessToken: string;
 
@@ -20,7 +21,8 @@ export class PayloadModel {
     description: 'ID token of the user',
     readOnly: true,
     required: true,
-    example: 'eyJraWQiOiJTdXYxR1hzVkZ0K2JleHNDdU5IUllqNUpsbWVoSWxFSHJnSkFxRDlZ...',
+    example:
+      'eyJraWQiOiJTdXYxR1hzVkZ0K2JleHNDdU5IUllqNUpsbWVoSWxFSHJnSkFxRDlZ...',
   })
   readonly idToken: string;
 
@@ -28,7 +30,8 @@ export class PayloadModel {
     description: 'Refresh token of the user',
     readOnly: true,
     required: true,
-    example: 'eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.j...',
+    example:
+      'eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.j...',
   })
   readonly refreshToken?: string;
 

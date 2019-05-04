@@ -1,4 +1,4 @@
-import { ApiModelProperty } from "@nestjs/swagger";
+import { ApiModelProperty } from '@nestjs/swagger';
 
 export class UserModel {
   @ApiModelProperty({
@@ -15,7 +15,15 @@ export class UserModel {
     required: true,
     example: 'TopSecretPassword',
   })
-  readonly password: string;
+  readonly password?: string;
+
+  @ApiModelProperty({
+    description: 'New password of the user',
+    readOnly: true,
+    required: false,
+    example: 'TopSecretPasswordNew',
+  })
+  readonly newPassword?: string;
 
   @ApiModelProperty({
     description: 'birthdate of the user',

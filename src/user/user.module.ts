@@ -22,4 +22,4 @@ import { ConfigModule } from '../config/config.module';
   providers: [JwtStrategy, UserService, UserRepository],
   controllers: [UserController],
 })
-export class UserModule { }
+export class UserModule {}

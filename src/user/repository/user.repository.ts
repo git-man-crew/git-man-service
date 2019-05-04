@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  Logger,
-  HttpService,
-} from '@nestjs/common';
+import { Injectable, Logger, HttpService } from '@nestjs/common';
 import {
   CognitoUserPool,
   AuthenticationDetails,
@@ -11,6 +7,7 @@ import {
   ICognitoUserPoolData,
   CognitoUserAttribute,
   CognitoRefreshToken,
+  ICognitoUserAttributeData,
 } from 'amazon-cognito-identity-js';
 import AWS = require('aws-sdk');
 import jwkToPem = require('jwk-to-pem');
@@ -26,44 +23,24 @@ export class UserRepository {
     ClientId: this.configService.getSystemProperty('APP_CLIENT_ID'),
   };
   private readonly userPool = new CognitoUserPool(this.poolData);
-  private readonly pool_region = this.configService.getSystemProperty('AWS_REGION');
+  private readonly pool_region = this.configService.getSystemProperty(
+    'AWS_REGION',
+  );
 
-  constructor(private readonly configService: ConfigService, private httpService: HttpService) {
+  constructor(
+    private readonly configService: ConfigService,
+    private httpService: HttpService,
+  ) {
     AWS.config = new AWS.Config();
     AWS.config.region = this.pool_region;
   }
 
-  public signUpUser(authModel: UserModel): Promise<any> {
-    const attributeList = [];
-    attributeList.push(
-      new CognitoUserAttribute({ Name: 'name', Value: authModel.name }),
-    );
-    attributeList.push(
-      new CognitoUserAttribute({
-        Name: 'preferred_username',
-        Value: authModel.email,
-      }),
-    );
-    attributeList.push(
-      new CognitoUserAttribute({
-        Name: 'birthdate',
-        Value: authModel.birthDate,
-      }),
-    );
-    attributeList.push(
-      new CognitoUserAttribute({ Name: 'email', Value: authModel.email }),
-    );
-    attributeList.push(
-      new CognitoUserAttribute({
-        Name: 'phone_number',
-        Value: authModel.phoneNumber,
-      }),
-    );
-
+  public signUpUser(userModel: UserModel): Promise<any> {
+    const attributeList = this.createAttributes(userModel);
     return new Promise((resolve, reject) => {
       this.userPool.signUp(
-        authModel.email,
-        authModel.password,
+        userModel.email,
+        userModel.password,
         attributeList,
         null,
         (err, result) => {
@@ -177,5 +154,131 @@ export class UserRepository {
         resolve(refreshedToken);
       });
     });
+  }
+
+  public async updateUser(userModel: UserModel) {
+    const authenticationDetails = new AuthenticationDetails({
+      Username: userModel.email,
+      Password: userModel.password,
+    });
+    const attributeList: any[] = this.createAttributes(userModel);
+    const userData = {
+      Username: authenticationDetails.getUsername(),
+      Pool: this.userPool,
+    };
+    const cognitoUser = new CognitoUser(userData);
+
+    return new Promise((resolve, reject) => {
+      cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess(session) {
+          cognitoUser.updateAttributes(attributeList, (err, result) => {
+            if (err) {
+              Logger.warn(err);
+              return reject(err);
+            }
+
+            Logger.log(result);
+            resolve(result);
+          });
+        },
+        onFailure(err) {
+          Logger.warn(err);
+          reject(err);
+        },
+      });
+    });
+  }
+
+  public deleteUser(userModel: UserModel) {
+    const authenticationDetails = new AuthenticationDetails({
+      Username: userModel.email,
+      Password: userModel.password,
+    });
+
+    const userData = {
+      Username: authenticationDetails.getUsername(),
+      Pool: this.userPool
+    };
+    const cognitoUser = new CognitoUser(userData);
+
+    return new Promise((resolve, reject) => {
+      cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess(result) {
+          cognitoUser.deleteUser((err, deletedUser) => {
+            if (err) {
+              Logger.warn(err);
+              return reject(err);
+            }
+            Logger.log('Successfully deleted the user.');
+            Logger.log(deletedUser);
+            resolve(deletedUser);
+          });
+        },
+        onFailure(err) {
+          Logger.warn(err);
+          reject(err);
+        },
+      });
+    });
+  }
+
+  public changePassword(userModel: UserModel) {
+    const authenticationDetails = new AuthenticationDetails({
+      Username: userModel.email,
+      Password: userModel.password,
+    });
+    const userData = {
+      Username: authenticationDetails.getUsername(),
+      Pool: this.userPool,
+    };
+    const cognitoUser = new CognitoUser(userData);
+
+    return new Promise((resolve, reject) => {
+      cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess(result) {
+          cognitoUser.changePassword(userModel.password, userModel.newPassword, (err, changedPassword) => {
+            if (err) {
+              Logger.warn(err);
+              return reject(err);
+            }
+            Logger.log('Successfully changed password of the user.');
+            Logger.log(changedPassword);
+            return resolve(changedPassword);
+          });
+        },
+        onFailure(err) {
+          Logger.log(err);
+          reject(err);
+        },
+      });
+    });
+  }
+
+  private createAttributes(userModel: UserModel): CognitoUserAttribute[] {
+    const attributeList: CognitoUserAttribute[] = [];
+    attributeList.push(
+      new CognitoUserAttribute({ Name: 'name', Value: userModel.name }),
+    );
+    attributeList.push(
+      new CognitoUserAttribute({
+        Name: 'preferred_username',
+        Value: userModel.email,
+      }),
+    );
+    attributeList.push(
+      new CognitoUserAttribute({
+        Name: 'birthdate',
+        Value: userModel.birthDate,
+      }),
+    );
+    attributeList.push(
+      new CognitoUserAttribute({ Name: 'email', Value: userModel.email }),
+    );
+    attributeList.push(
+      new CognitoUserAttribute({
+        Name: 'phone_number',
+        Value: userModel.phoneNumber,
+      }));
+    return attributeList;
   }
 }
