@@ -5,11 +5,13 @@ import { ConfigService } from './service/config.service';
   providers: [
     {
       provide: ConfigService,
-      useValue: new ConfigService(
-        `config/${process.env.NODE_ENV || 'dev'}.env`,
-      ),
+      useFactory: () => {
+        return new ConfigService(
+          `config/${process.env.NODE_ENV || 'dev'}.env`,
+        );
+      },
     },
   ],
   exports: [ConfigService],
 })
-export class ConfigModule {}
+export class ConfigModule { }
