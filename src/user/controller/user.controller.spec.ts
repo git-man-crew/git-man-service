@@ -6,7 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UserRepository } from '../repository/user.repository';
 import { mock } from 'ts-mockito';
 import { UserModel } from '../models/user.model';
-import { CryptoService } from 'src/crypto/service/crypto.service';
+import { CryptoService } from '../../crypto/service/crypto.service';
 
 describe('Auth Controller', () => {
   let controller: UserController;
