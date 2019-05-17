@@ -7,12 +7,14 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { UserModel } from '../models/user.model';
 import { UserRepository } from '../repository/user.repository';
+import { CryptoService } from '../../crypto/service/crypto.service';
 
 @Injectable()
 export class UserService {
     constructor(
         private readonly jwtService: JwtService,
         private readonly userRepository: UserRepository,
+        private readonly cryptoService: CryptoService,
     ) { }
 
     public async registerUser(userModel: UserModel) {
@@ -38,7 +40,7 @@ export class UserService {
             throw new ForbiddenException();
         });
         const accessToken = this.jwtService.sign({
-            user: authModel.email,
+            userDetails: this.cryptoService.encryptText(JSON.stringify(authModel)),
             accessToken: user.getAccessToken().getJwtToken(),
             idToken: user.getIdToken().getJwtToken(),
             refreshToken: user.getRefreshToken().getToken(),

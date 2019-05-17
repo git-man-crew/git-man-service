@@ -6,6 +6,7 @@ import { UserService } from './service/user.service';
 import { UserController } from './controller/user.controller';
 import { UserRepository } from './repository/user.repository';
 import { ConfigModule } from '../config/config.module';
+import { CryptoModule } from '../crypto/crypto.module';
 
 @Module({
   imports: [
@@ -18,8 +19,9 @@ import { ConfigModule } from '../config/config.module';
     }),
     HttpModule,
     ConfigModule,
+    CryptoModule,
   ],
   providers: [JwtStrategy, UserService, UserRepository],
   controllers: [UserController],
 })
-export class UserModule {}
+export class UserModule { }

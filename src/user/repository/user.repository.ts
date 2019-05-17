@@ -7,7 +7,6 @@ import {
   ICognitoUserPoolData,
   CognitoUserAttribute,
   CognitoRefreshToken,
-  ICognitoUserAttributeData,
 } from 'amazon-cognito-identity-js';
 import AWS = require('aws-sdk');
 import jwkToPem = require('jwk-to-pem');
@@ -15,7 +14,6 @@ import jwt = require('jsonwebtoken');
 import { UserModel } from '../models/user.model';
 import { ConfigService } from '../../config/service/config.service';
 import fetch = require('node-fetch');
-import { CognitoIdentityServiceProvider } from 'aws-sdk';
 (global as any).fetch = fetch;
 
 @Injectable()
@@ -172,7 +170,7 @@ export class UserRepository {
 
     return new Promise((resolve, reject) => {
       cognitoUser.authenticateUser(authenticationDetails, {
-        onSuccess(session) {
+        onSuccess() {
           cognitoUser.updateAttributes(attributeList, (err, result) => {
             if (err) {
               Logger.warn(err);
@@ -205,7 +203,7 @@ export class UserRepository {
 
     return new Promise((resolve, reject) => {
       cognitoUser.authenticateUser(authenticationDetails, {
-        onSuccess(result) {
+        onSuccess() {
           cognitoUser.deleteUser((err, deletedUser) => {
             if (err) {
               Logger.warn(err);
@@ -237,7 +235,7 @@ export class UserRepository {
 
     return new Promise((resolve, reject) => {
       cognitoUser.authenticateUser(authenticationDetails, {
-        onSuccess(result) {
+        onSuccess() {
           cognitoUser.changePassword(userModel.password, userModel.newPassword, (err, changedPassword) => {
             if (err) {
               Logger.warn(err);

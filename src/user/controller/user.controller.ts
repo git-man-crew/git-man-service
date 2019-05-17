@@ -92,7 +92,7 @@ export class UserController {
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
     status: 200,
-    description: 'User is successful signed in and JWT is created.',
+    description: 'User password is successful changed.',
     type: UserModel,
   })
   @ApiResponse({ status: 400, description: 'Forbidden' })
