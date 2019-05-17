@@ -19,11 +19,11 @@ export class ConfigService {
     this.envConfig = dotenv.parse(fs.readFileSync(path.resolve(this.filePath)));
   }
 
-  getSystemProperty(key: string): string {
+  public getSystemProperty(key: string): string {
     return process.env[key] || this.envConfig[key];
   }
 
-  getModuleProperty(key: string): string {
+  public getModuleProperty(key: string): string {
     return this.packageConfig[key];
   }
 }

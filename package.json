@@ -30,6 +30,7 @@
     "@nestjs/swagger": "^3.0.2",
     "amazon-cognito-identity-js": "^3.0.11",
     "aws-sdk": "^2.448.0",
+    "crypto-random-string": "^3.0.0",
     "dotenv": "^8.0.0",
     "jsonwebtoken": "^8.5.1",
     "jwk-to-pem": "^2.0.1",
