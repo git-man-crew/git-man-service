@@ -15,6 +15,7 @@ import jwt = require('jsonwebtoken');
 import { UserModel } from '../models/user.model';
 import { ConfigService } from '../../config/service/config.service';
 import fetch = require('node-fetch');
+import { CognitoIdentityServiceProvider } from 'aws-sdk';
 (global as any).fetch = fetch;
 
 @Injectable()
@@ -251,6 +252,27 @@ export class UserRepository {
           Logger.log(err);
           reject(err);
         },
+      });
+    });
+  }
+
+  public getUserAttributes(userModel: UserModel) {
+    const authenticationDetails = new AuthenticationDetails({
+      Username: userModel.email,
+      Password: userModel.password,
+    });
+    const userData = {
+      Username: authenticationDetails.getUsername(),
+      Pool: this.userPool,
+    };
+    const cognitoUser = new CognitoUser(userData);
+    return new Promise((resolve, reject) => {
+      cognitoUser.getUserAttributes((err, attributes: CognitoUserAttribute[]) => {
+        if (err) {
+          Logger.warn(err);
+          return reject(err);
+        }
+        return resolve(attributes);
       });
     });
   }
