@@ -3,12 +3,10 @@ import {
     BadRequestException,
     ForbiddenException,
     UnauthorizedException,
-    Logger,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserModel } from '../models/user.model';
 import { UserRepository } from '../repository/user.repository';
-import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
 
 @Injectable()
 export class UserService {
@@ -27,7 +25,9 @@ export class UserService {
         ) {
             throw new BadRequestException('Missing user data for registration');
         }
-        return this.userRepository.signUpUser(userModel);
+        return await this.userRepository.signUpUser(userModel).catch((err) => {
+            throw new BadRequestException(err.message);
+        });
     }
 
     public async createToken(authModel: UserModel) {

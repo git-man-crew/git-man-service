@@ -33,9 +33,7 @@ export class UserController {
   })
   @ApiResponse({ status: 400, description: 'Bad Request.' })
   async registerUser(@Body() userModel: UserModel) {
-    return await this.userService.registerUser(userModel).catch(err => {
-      throw err;
-    });
+    return this.userService.registerUser(userModel);
   }
 
   @Get()
