@@ -20,11 +20,12 @@ import { UserModel } from '../models/user.model';
 import { ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { PayloadModel } from '../models/payload.model';
 import { AnyLengthString } from 'aws-sdk/clients/comprehend';
+import { CryptoService } from '../../crypto/service/crypto.service';
 
 @ApiBearerAuth()
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly userService: UserService, private readonly cryptoService: CryptoService) { }
 
   @Post()
   @ApiResponse({
@@ -44,8 +45,9 @@ export class UserController {
   })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @UseGuards(AuthGuard())
-  public getUserTokens(@Request() { user }): PayloadModel {
-    return user as PayloadModel;
+  public async getUser(@Request() { user }): Promise<UserModel> {
+    const userModel: UserModel = JSON.parse(this.cryptoService.decryptText(user.userDetails));
+    return await this.userService.getUser(userModel);
   }
 
   @Put()

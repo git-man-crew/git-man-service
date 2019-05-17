@@ -254,7 +254,7 @@ export class UserRepository {
     });
   }
 
-  public getUserAttributes(userModel: UserModel) {
+  public getUserAttributes(userModel: UserModel): Promise<CognitoUserAttribute[]> {
     const authenticationDetails = new AuthenticationDetails({
       Username: userModel.email,
       Password: userModel.password,
@@ -264,13 +264,22 @@ export class UserRepository {
       Pool: this.userPool,
     };
     const cognitoUser = new CognitoUser(userData);
+
     return new Promise((resolve, reject) => {
-      cognitoUser.getUserAttributes((err, attributes: CognitoUserAttribute[]) => {
-        if (err) {
-          Logger.warn(err);
-          return reject(err);
-        }
-        return resolve(attributes);
+      cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess() {
+          cognitoUser.getUserAttributes((err, attributes: CognitoUserAttribute[]) => {
+            if (err) {
+              Logger.warn(err);
+              return reject(err);
+            }
+            return resolve(attributes);
+          });
+        },
+        onFailure(err) {
+          Logger.log(err);
+          reject(err);
+        },
       });
     });
   }

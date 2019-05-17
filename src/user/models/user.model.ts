@@ -7,7 +7,7 @@ export class UserModel {
     required: true,
     example: 'mạnh-phước.nguyễn@king-of-nerds.io',
   })
-  readonly email: string;
+  readonly email: string = '';
 
   @ApiModelProperty({
     description: 'Password of the user',
@@ -15,7 +15,7 @@ export class UserModel {
     required: true,
     example: 'TopSecretPassword',
   })
-  readonly password?: string;
+  readonly password?: string = '';
 
   @ApiModelProperty({
     description: 'New password of the user',
@@ -23,7 +23,7 @@ export class UserModel {
     required: false,
     example: 'TopSecretPasswordNew',
   })
-  readonly newPassword?: string;
+  readonly newPassword?: string = '';
 
   @ApiModelProperty({
     description: 'birthdate of the user',
@@ -31,7 +31,7 @@ export class UserModel {
     required: false,
     example: '13.12.1955',
   })
-  readonly birthDate?: string;
+  readonly birthDate?: string = '';
 
   @ApiModelProperty({
     description: 'Phone number of the user',
@@ -39,7 +39,7 @@ export class UserModel {
     required: false,
     example: '+491775558762',
   })
-  readonly phoneNumber?: string;
+  readonly phoneNumber?: string = '';
 
   @ApiModelProperty({
     description: 'Full name of the user',
@@ -47,5 +47,5 @@ export class UserModel {
     required: false,
     example: 'Mạnh Phước Nguyễn',
   })
-  readonly name?: string;
+  readonly name?: string = '';
 }

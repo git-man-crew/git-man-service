@@ -6,6 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UserRepository } from '../repository/user.repository';
 import { mock } from 'ts-mockito';
 import { UserModel } from '../models/user.model';
+import { CryptoService } from 'src/crypto/service/crypto.service';
 
 describe('Auth Controller', () => {
   let controller: UserController;
@@ -18,10 +19,11 @@ describe('Auth Controller', () => {
     }).compile();
     controller = module.get<UserController>(UserController);
 
+    const cryptoService: CryptoService = mock(CryptoService);
     const jwtService: JwtService = mock(JwtService);
     const userRepository: UserRepository = mock(UserRepository);
-    userService = new UserService(jwtService, userRepository);
-    userController = new UserController(userService);
+    userService = new UserService(jwtService, userRepository, cryptoService);
+    userController = new UserController(userService, cryptoService);
   });
 
   it('should be defined', () => {

@@ -9,7 +9,7 @@ export class CryptoService {
     private readonly iv: Buffer = randomBytes(16);
     private readonly algorithm: string = 'aes-256-cbc';
     private readonly password: string = cryptoRandomString({
-        length: Number.parseInt(this.configService.getSystemProperty('CRYPTO_SECRET_LENGTH'), 10),
+        length: Number.parseInt(this.configService.getSystemProperty('CRYPTO_SECRET_LENGTH') || '5', 10),
     });
 
     constructor(private readonly configService: ConfigService) { }

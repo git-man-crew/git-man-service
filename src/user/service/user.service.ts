@@ -8,6 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UserModel } from '../models/user.model';
 import { UserRepository } from '../repository/user.repository';
 import { CryptoService } from '../../crypto/service/crypto.service';
+import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
 
 @Injectable()
 export class UserService {
@@ -74,5 +75,18 @@ export class UserService {
             throw new UnauthorizedException();
         });
         return payload;
+    }
+
+    public async getUser(userModel: UserModel): Promise<UserModel> {
+        const userAttributes: CognitoUserAttribute[] = await this.userRepository.getUserAttributes(userModel).catch((err) => {
+            throw new BadRequestException(err.message);
+        });
+        const user: UserModel = {
+            email: userModel.email,
+        };
+        userAttributes.forEach((attribute: CognitoUserAttribute) => {
+            user[attribute.getName()] = attribute.getValue();
+        });
+        return user;
     }
 }
