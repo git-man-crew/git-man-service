@@ -12,7 +12,7 @@
 
 ## Description
 
-[Git-Man-Service](https://github.com/nestjs/nest) framework TypeScript starter repository.
+[Git-Man-Service](https://github.com/git-man-crew/git-man-service) repository for the API layer of the git man web and bot application for administrating various git repositories of different git platforms.
 
 ## Installation
 
