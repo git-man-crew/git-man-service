@@ -9,6 +9,7 @@ import { UserModel } from '../models/user.model';
 import { UserRepository } from '../repository/user.repository';
 import { CryptoService } from '../../crypto/service/crypto.service';
 import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
+import camelcase = require('camelcase');
 
 @Injectable()
 export class UserService {
@@ -20,7 +21,7 @@ export class UserService {
 
     public async registerUser(userModel: UserModel) {
         if (
-            !userModel.birthDate ||
+            !userModel.birthdate ||
             !userModel.email ||
             !userModel.name ||
             !userModel.password ||
@@ -85,7 +86,7 @@ export class UserService {
             email: userModel.email,
         };
         userAttributes.forEach((attribute: CognitoUserAttribute) => {
-            user[attribute.getName()] = attribute.getValue();
+            user[camelcase(attribute.getName())] = attribute.getValue();
         });
         return user;
     }

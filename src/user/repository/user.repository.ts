@@ -298,7 +298,7 @@ export class UserRepository {
     attributeList.push(
       new CognitoUserAttribute({
         Name: 'birthdate',
-        Value: userModel.birthDate,
+        Value: userModel.birthdate,
       }),
     );
     attributeList.push(

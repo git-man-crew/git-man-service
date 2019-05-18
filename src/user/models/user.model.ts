@@ -31,7 +31,7 @@ export class UserModel {
     required: false,
     example: '13.12.1955',
   })
-  readonly birthDate?: string = '';
+  readonly birthdate?: string = '';
 
   @ApiModelProperty({
     description: 'Phone number of the user',
@@ -48,4 +48,36 @@ export class UserModel {
     example: 'Mạnh Phước Nguyễn',
   })
   readonly name?: string = '';
+
+  @ApiModelProperty({
+    description: 'User ID of the user',
+    readOnly: true,
+    required: false,
+    example: 'eae6c741-f78d-4957-82ab-e4e2a9294ea5',
+  })
+  readonly sub?: string = '';
+
+  @ApiModelProperty({
+    description: 'Boolean flag which indicates the email verification after the user registration',
+    readOnly: true,
+    required: false,
+    example: 'true',
+  })
+  readonly emailVerified?: string = '';
+
+  @ApiModelProperty({
+    description: 'Boolean flag which indicates the phone number verification after the user registration',
+    readOnly: true,
+    required: false,
+    example: 'false',
+  })
+  readonly phoneNumberVerified?: string = '';
+
+  @ApiModelProperty({
+    description: 'Preferrered username of the registered user',
+    readOnly: true,
+    required: false,
+    example: 'false',
+  })
+  readonly preferredUsername?: string = 'leon1jaekel@aol.com';
 }
