@@ -67,6 +67,3 @@ src/auth/fbuser/secrets/**
 
 # Jest
 coverage/
-
-# Resources
-resources

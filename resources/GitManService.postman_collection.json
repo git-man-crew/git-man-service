@@ -1,0 +1,220 @@
+{
+	"info": {
+		"_postman_id": "220d49fe-c6af-4739-bbd5-e2e664f4b6f4",
+		"name": "GitManService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get User Token",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://git-man-service.herokuapp.com/user",
+					"protocol": "https",
+					"host": [
+						"git-man-service",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"leon1jaekel@aol.com\",\n\t\"password\": \"Hallo1234!\",\n\t\"birthDate\": \"13.12.1990\",\n\t\"name\": \"Maxi\",\n\t\"phoneNumber\": \"+491775558762\"\n}"
+				},
+				"url": {
+					"raw": "https://git-man-service.herokuapp.com/user",
+					"protocol": "https",
+					"host": [
+						"git-man-service",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User Properties",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"leon1jaekel@aol.com\",\n\t\"password\": \"Hallo1234!\",\n\t\"birthDate\": \"13.12.1990\",\n\t\"name\": \"Maxi\",\n\t\"phoneNumber\": \"+491775558762\"\n}"
+				},
+				"url": {
+					"raw": "https://git-man-service.herokuapp.com/user",
+					"protocol": "https",
+					"host": [
+						"git-man-service",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Existing User",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"leon1jaekel@aol.com\",\n\t\"password\": \"Hallo1234!\",\n\t\"birthDate\": \"13.12.1990\",\n\t\"name\": \"Maxi\",\n\t\"phoneNumber\": \"+491775558762\"\n}"
+				},
+				"url": {
+					"raw": "https://git-man-service.herokuapp.com/user",
+					"protocol": "https",
+					"host": [
+						"git-man-service",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change Password",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"leon1jaekel@aol.com\",\n\t\"password\": \"Augsburg1998!\",\n\t\"newPassword\": \"Augsburg1998!\"\n}"
+				},
+				"url": {
+					"raw": "https://git-man-service.herokuapp.com//user/auth",
+					"protocol": "https",
+					"host": [
+						"git-man-service",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"",
+						"user",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb2f753b-066c-4b35-a2f0-e7095314db4f",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\", jsonData.accessToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"leon1jaekel@aol.com\",\n\t\"password\": \"Augsburg1998!\"\n}"
+				},
+				"url": {
+					"raw": "https://git-man-service.herokuapp.com/user/auth",
+					"protocol": "https",
+					"host": [
+						"git-man-service",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
