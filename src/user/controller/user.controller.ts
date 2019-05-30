@@ -21,6 +21,7 @@ import { ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { PayloadModel } from '../models/payload.model';
 import { AnyLengthString } from 'aws-sdk/clients/comprehend';
 import { CryptoService } from '../../crypto/service/crypto.service';
+import { Response as ExpressResponse } from 'express';
 
 @ApiBearerAuth()
 @Controller('user')
@@ -58,7 +59,9 @@ export class UserController {
   })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @UseGuards(AuthGuard())
-  public async  updateUser(@Body() userModel: UserModel): Promise<any> {
+  public async updateUser(@Request() { user }, @Body() userModel: UserModel): Promise<any> {
+    const authenticationDetails: UserModel = JSON.parse(this.cryptoService.decryptText(user.userDetails));
+    Object.assign(userModel, authenticationDetails);
     return await this.userService.updateUser(userModel);
   }
 
@@ -69,7 +72,9 @@ export class UserController {
   })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @UseGuards(AuthGuard())
-  public async deleteUser(@Body() userModel: UserModel) {
+  public async deleteUser(@Request() { user }, @Body() userModel: UserModel) {
+    const authenticationDetails: UserModel = JSON.parse(this.cryptoService.decryptText(user.userDetails));
+    Object.assign(userModel, authenticationDetails);
     return await this.userService.deleteUser(userModel);
   }
 
@@ -83,7 +88,7 @@ export class UserController {
   @ApiResponse({ status: 403, description: 'Forbidden' })
   public async createToken(
     @Body() userModel: UserModel,
-    @Response() response,
+    @Response() response: ExpressResponse,
   ): Promise<any> {
     const token = await this.userService.createToken(userModel);
     response.set('Authorization', `Bearer ${token.accessToken}`);

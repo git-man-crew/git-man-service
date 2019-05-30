@@ -7,7 +7,7 @@ export class UserModel {
     required: true,
     example: 'mạnh-phước.nguyễn@king-of-nerds.io',
   })
-  readonly email: string = '';
+  readonly email: string;
 
   @ApiModelProperty({
     description: 'Password of the user',
@@ -15,7 +15,7 @@ export class UserModel {
     required: true,
     example: 'TopSecretPassword',
   })
-  readonly password?: string = '';
+  readonly password?: string;
 
   @ApiModelProperty({
     description: 'New password of the user',
@@ -23,7 +23,7 @@ export class UserModel {
     required: false,
     example: 'TopSecretPasswordNew',
   })
-  readonly newPassword?: string = '';
+  readonly newPassword?: string;
 
   @ApiModelProperty({
     description: 'birthdate of the user',
@@ -31,7 +31,7 @@ export class UserModel {
     required: false,
     example: '13.12.1955',
   })
-  readonly birthdate?: string = '';
+  readonly birthdate?: string;
 
   @ApiModelProperty({
     description: 'Phone number of the user',
@@ -39,7 +39,7 @@ export class UserModel {
     required: false,
     example: '+491775558762',
   })
-  readonly phoneNumber?: string = '';
+  readonly phoneNumber?: string;
 
   @ApiModelProperty({
     description: 'Full name of the user',
@@ -47,7 +47,7 @@ export class UserModel {
     required: false,
     example: 'Mạnh Phước Nguyễn',
   })
-  readonly name?: string = '';
+  readonly name?: string;
 
   @ApiModelProperty({
     description: 'User ID of the user',
@@ -55,7 +55,7 @@ export class UserModel {
     required: false,
     example: 'eae6c741-f78d-4957-82ab-e4e2a9294ea5',
   })
-  readonly sub?: string = '';
+  readonly sub?: string;
 
   @ApiModelProperty({
     description: 'Boolean flag which indicates the email verification after the user registration',
@@ -63,7 +63,7 @@ export class UserModel {
     required: false,
     example: 'true',
   })
-  readonly emailVerified?: string = '';
+  readonly emailVerified?: string;
 
   @ApiModelProperty({
     description: 'Boolean flag which indicates the phone number verification after the user registration',
@@ -71,7 +71,7 @@ export class UserModel {
     required: false,
     example: 'false',
   })
-  readonly phoneNumberVerified?: string = '';
+  readonly phoneNumberVerified?: string;
 
   @ApiModelProperty({
     description: 'Preferrered username of the registered user',
@@ -79,5 +79,5 @@ export class UserModel {
     required: false,
     example: 'false',
   })
-  readonly preferredUsername?: string = 'leon1jaekel@aol.com';
+  readonly preferredUsername?: string;
 }
