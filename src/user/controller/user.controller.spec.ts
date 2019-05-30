@@ -11,7 +11,6 @@ import LoginResposne from '../../../resources/mocks/loginResponse';
 import Substitute from '@fluffy-spoon/substitute';
 import { Response as ExpressResponse } from 'express';
 
-
 describe('Auth Controller', () => {
   let controller: UserController;
   let userController: UserController;
@@ -121,7 +120,7 @@ describe('Auth Controller', () => {
   it('should create a JWT token by user authentication', async () => {
     const userModel = {
       email: 'leon1jaekel@aol.com',
-      password: 'topSecretPassword'
+      password: 'topSecretPassword',
     };
     const reponseMock = Substitute.for<ExpressResponse>();
     jest.spyOn(userService, 'createToken').mockResolvedValue(Promise.resolve(LoginResposne));
