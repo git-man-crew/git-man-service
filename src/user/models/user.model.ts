@@ -47,7 +47,7 @@ export class UserModel {
   @IsOptional({
     groups: ['authentication'],
   })
-  readonly birthdate?: string;
+  readonly birthDate?: string;
 
   @ApiModelProperty({
     description: 'Phone number of the user',
@@ -86,12 +86,6 @@ export class UserModel {
     example: 'eae6c741-f78d-4957-82ab-e4e2a9294ea5',
   })
   @IsString()
-  @IsDefined({
-    groups: ['userManagement'],
-  })
-  @IsOptional({
-    groups: ['authentication'],
-  })
   readonly sub?: string;
 
   @ApiModelProperty({
@@ -101,12 +95,6 @@ export class UserModel {
     example: 'true',
   })
   @IsString()
-  @IsDefined({
-    groups: ['userManagement'],
-  })
-  @IsOptional({
-    groups: ['authentication'],
-  })
   readonly emailVerified?: string;
 
   @ApiModelProperty({
@@ -114,12 +102,6 @@ export class UserModel {
     readOnly: true,
     required: false,
     example: 'false',
-  })
-  @IsDefined({
-    groups: ['userManagement'],
-  })
-  @IsOptional({
-    groups: ['authentication'],
   })
   readonly phoneNumberVerified?: string;
 
@@ -130,11 +112,5 @@ export class UserModel {
     example: 'false',
   })
   @IsString()
-  @IsDefined({
-    groups: ['userManagement'],
-  })
-  @IsOptional({
-    groups: ['authentication'],
-  })
   readonly preferredUsername?: string;
 }
