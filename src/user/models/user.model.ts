@@ -1,4 +1,5 @@
 import { ApiModelProperty } from '@nestjs/swagger';
+import { IsString, IsOptional, IsNotEmpty, IsDefined } from 'class-validator';
 
 export class UserModel {
   @ApiModelProperty({
@@ -6,6 +7,10 @@ export class UserModel {
     readOnly: true,
     required: true,
     example: 'mạnh-phước.nguyễn@king-of-nerds.io',
+  })
+  @IsString()
+  @IsDefined({
+    groups: ['authentication', 'userManagement'],
   })
   readonly email: string;
 
@@ -15,6 +20,10 @@ export class UserModel {
     required: true,
     example: 'TopSecretPassword',
   })
+  @IsString()
+  @IsDefined({
+    groups: ['authentication', 'userManagement'],
+  })
   readonly password?: string;
 
   @ApiModelProperty({
@@ -23,6 +32,7 @@ export class UserModel {
     required: false,
     example: 'TopSecretPasswordNew',
   })
+  @IsString()
   readonly newPassword?: string;
 
   @ApiModelProperty({
@@ -30,6 +40,9 @@ export class UserModel {
     readOnly: true,
     required: false,
     example: '13.12.1955',
+  })
+  @IsDefined({
+    groups: ['userManagement'],
   })
   readonly birthdate?: string;
 
@@ -39,6 +52,10 @@ export class UserModel {
     required: false,
     example: '+491775558762',
   })
+  @IsString()
+  @IsDefined({
+    groups: ['userManagement'],
+  })
   readonly phoneNumber?: string;
 
   @ApiModelProperty({
@@ -47,6 +64,7 @@ export class UserModel {
     required: false,
     example: 'Mạnh Phước Nguyễn',
   })
+  @IsString()
   readonly name?: string;
 
   @ApiModelProperty({
@@ -55,6 +73,7 @@ export class UserModel {
     required: false,
     example: 'eae6c741-f78d-4957-82ab-e4e2a9294ea5',
   })
+  @IsString()
   readonly sub?: string;
 
   @ApiModelProperty({
@@ -63,6 +82,8 @@ export class UserModel {
     required: false,
     example: 'true',
   })
+  @IsString()
+  @IsOptional()
   readonly emailVerified?: string;
 
   @ApiModelProperty({
@@ -71,6 +92,7 @@ export class UserModel {
     required: false,
     example: 'false',
   })
+  @IsString()
   readonly phoneNumberVerified?: string;
 
   @ApiModelProperty({
@@ -79,5 +101,7 @@ export class UserModel {
     required: false,
     example: 'false',
   })
+  @IsString()
+
   readonly preferredUsername?: string;
 }

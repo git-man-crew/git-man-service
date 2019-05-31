@@ -6,4 +6,4 @@ import { CryptoModule } from './crypto/crypto.module';
 @Module({
   imports: [UserModule, ConfigModule, CryptoModule],
 })
-export class AppModule {}
+export class AppModule { }

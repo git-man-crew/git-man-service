@@ -7,19 +7,16 @@ import {
   Response,
   Request,
   Put,
-  BadRequestException,
-  Headers,
   HttpCode,
   HttpStatus,
-  Logger,
   Delete,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UserService } from '../service/user.service';
 import { UserModel } from '../models/user.model';
 import { ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
-import { PayloadModel } from '../models/payload.model';
-import { AnyLengthString } from 'aws-sdk/clients/comprehend';
 import { CryptoService } from '../../crypto/service/crypto.service';
 import { Response as ExpressResponse } from 'express';
 
@@ -34,6 +31,9 @@ export class UserController {
     description: 'User is successful created and activation mail is sent.',
   })
   @ApiResponse({ status: 400, description: 'Bad Request.' })
+  @UsePipes(new ValidationPipe({
+    groups: ['userManagement'],
+  }))
   async registerUser(@Body() userModel: UserModel) {
     return this.userService.registerUser(userModel);
   }
@@ -41,8 +41,8 @@ export class UserController {
   @Get()
   @ApiResponse({
     status: 200,
-    description: 'User JWT information should be displayed',
-    type: PayloadModel,
+    description: 'User detail information should be displayed',
+    type: UserModel,
   })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @UseGuards(AuthGuard())
@@ -86,6 +86,9 @@ export class UserController {
     type: UserModel,
   })
   @ApiResponse({ status: 403, description: 'Forbidden' })
+  @UsePipes(new ValidationPipe({
+    groups: ['authentication'],
+  }))
   public async createToken(
     @Body() userModel: UserModel,
     @Response() response: ExpressResponse,

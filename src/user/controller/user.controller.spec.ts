@@ -7,7 +7,7 @@ import { UserRepository } from '../repository/user.repository';
 import { mock } from 'ts-mockito';
 import { UserModel } from '../models/user.model';
 import { CryptoService } from '../../crypto/service/crypto.service';
-import LoginResposne from '../../../resources/mocks/loginResponse';
+import * as LoginResposne from '../../../resources/mocks/loginResponse.json';
 import Substitute from '@fluffy-spoon/substitute';
 import { Response as ExpressResponse } from 'express';
 

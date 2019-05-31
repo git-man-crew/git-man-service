@@ -67,3 +67,6 @@ src/auth/fbuser/secrets/**
 
 # Jest
 coverage/
+
+# TypeScript Compilates
+dist/
