@@ -46,6 +46,9 @@ export class UserController {
   })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @UseGuards(AuthGuard())
+  @UsePipes(new ValidationPipe({
+    groups: ['userManagement'],
+  }))
   public async getUser(@Request() { user }): Promise<UserModel> {
     const userModel: UserModel = JSON.parse(this.cryptoService.decryptText(user.userDetails));
     return await this.userService.getUser(userModel);
@@ -59,6 +62,9 @@ export class UserController {
   })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @UseGuards(AuthGuard())
+  @UsePipes(new ValidationPipe({
+    groups: ['userManagement'],
+  }))
   public async updateUser(@Request() { user }, @Body() userModel: UserModel): Promise<any> {
     const authenticationDetails: UserModel = JSON.parse(this.cryptoService.decryptText(user.userDetails));
     Object.assign(userModel, authenticationDetails);
@@ -72,6 +78,9 @@ export class UserController {
   })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @UseGuards(AuthGuard())
+  @UsePipes(new ValidationPipe({
+    groups: ['userManagement'],
+  }))
   public async deleteUser(@Request() { user }, @Body() userModel: UserModel) {
     const authenticationDetails: UserModel = JSON.parse(this.cryptoService.decryptText(user.userDetails));
     Object.assign(userModel, authenticationDetails);
