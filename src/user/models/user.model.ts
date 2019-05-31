@@ -47,7 +47,7 @@ export class UserModel {
   @IsOptional({
     groups: ['authentication'],
   })
-  readonly birthDate?: string;
+  readonly birthdate?: string;
 
   @ApiModelProperty({
     description: 'Phone number of the user',
